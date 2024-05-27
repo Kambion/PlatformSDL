@@ -1,11 +1,11 @@
 ﻿#include "SDL3/SDL_main.h"
-#include "GameEngine.h"
+#include "Game.h"
 
 #ifdef __cplusplus
 extern "C"
 #endif
 int main(int argc, char** argv) {
-	GameEngine gameEngine;
-	gameEngine.start();
+	Game game;
+	game.start();
 	return 0;
 };

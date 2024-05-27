@@ -4,12 +4,10 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 project(PlatformSDL)
 set(CMAKE_CXX_STANDARD 17)
 
-SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/Program Files/boost/boost_1_82_0")
-SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/Program Files/boost/boost_1_82_0/stage/lib")
 
-set(Boost_USE_STATIC_RUNTIME OFF)
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
 
-find_package(Boost 1.82 REQUIRED)
 
 add_subdirectory("external/SDL")
 add_subdirectory("external/SDL_ttf")
@@ -17,21 +15,25 @@ add_subdirectory("external/SDL_ttf")
 set(FONTS_FOLDER ${ROOT_DIR}fonts)
 set(IMAGES_FOLDER ${ROOT_DIR}images)
 
-add_executable(PlatformSDL "src/main.cpp" "src/GameEngine.cpp" "include/GameEngine.h" "src/Window.cpp" "include/Window.h")
+add_executable(PlatformSDL "src/main.cpp" "src/Game.cpp" "include/Game.h" "src/Window.cpp" "include/Window.h" "include/MenuEngine.h" "src/MenuEngine.cpp")
+
+set(BOOST_ROOT "C:/Program Files/boost/boost_1_82_0")
+set(BOOST_LIBRARYDIR "C:/Program Files/boost/boost_1_82_0/stage/lib")
+
+find_package(Boost 1.82 REQUIRED COMPONENTS thread)
 
 if(Boost_FOUND)
-    target_include_directories(${PROJECT_NAME} PUBLIC ${Boost_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
-    message(STATUS "Found BOOST ${Boost_VERSION_STRING}")
+    include_directories(${Boost_INCLUDE_DIRS})
+    target_link_libraries(PlatformSDL ${Boost_LIBRARIES})
 else()
-    message(STATUS "WEBSOCKET BOOST Not Found")
+    message(FATAL_ERROR "Could not find Boost libraries!")
 endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 target_include_directories(PlatformSDL PUBLIC "${CMAKE_SOURCE_DIR}/external/SDL/include/")
-target_link_libraries(PlatformSDL PRIVATE SDL3::SDL3)
+target_link_libraries(PlatformSDL SDL3::SDL3)
 target_include_directories(PlatformSDL PUBLIC "${CMAKE_SOURCE_DIR}/external/SDL_ttf/include/")
-target_link_libraries(PlatformSDL PRIVATE SDL3_ttf::SDL3_ttf)
+target_link_libraries(PlatformSDL SDL3_ttf::SDL3_ttf)
 
 
 set(RELEASE_BUILD_DIR ${CMAKE_BINARY_DIR})

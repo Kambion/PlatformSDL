@@ -30,4 +30,5 @@ public:
 	void drawRectangle(SDL_Rect rect, Uint32 fillColor);
 	void drawRectangle(SDL_Rect rect, int thickness, Uint32 outlineColor, Uint32 fillColor);
 	void drawCircle(int x, int y, int radius, int thickness, Uint32 fillColor);
+	void clearWindow();
 };

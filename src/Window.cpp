@@ -79,6 +79,10 @@ SDL_Surface* Window::SDL_CreateRGBSurface(Uint32 flags, int width, int height, i
 		SDL_GetPixelFormatEnumForMasks(depth, Rmask, Gmask, Bmask, Amask));
 }
 
+void Window::clearWindow() {
+	drawRectangle({ 0,0,width,height }, 0x0);
+}
+
 void Window::update() {
 	SDL_UpdateTexture(scrtex, NULL, screen->pixels, screen->pitch);
 	SDL_RenderTexture(renderer, scrtex, NULL, NULL);

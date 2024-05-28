@@ -15,7 +15,7 @@ add_subdirectory("external/SDL_ttf")
 set(FONTS_FOLDER ${ROOT_DIR}fonts)
 set(IMAGES_FOLDER ${ROOT_DIR}images)
 
-add_executable(PlatformSDL "src/main.cpp" "src/Game.cpp" "include/Game.h" "src/Window.cpp" "include/Window.h" "include/MenuEngine.h" "src/MenuEngine.cpp")
+add_executable(PlatformSDL "src/main.cpp" "src/Game.cpp" "include/Game.h" "src/Window.cpp" "include/Window.h" "include/MenuEngine.h" "src/MenuEngine.cpp" "src/MenuButton.cpp" "include/MenuButton.h" "include/Fonts.h")
 
 set(BOOST_ROOT "C:/Program Files/boost/boost_1_82_0")
 set(BOOST_LIBRARYDIR "C:/Program Files/boost/boost_1_82_0/stage/lib")

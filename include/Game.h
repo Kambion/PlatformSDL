@@ -8,6 +8,7 @@ private:
 	bool exit = false;
 	Window window{ "PlatformSDL", 1000, 700, false };
 	MenuEngine menuEngine{ window, windowMutex, exit };
+	void events();
 public:
 	void start();
 };

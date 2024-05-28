@@ -130,3 +130,38 @@ void Window::drawRectangle(SDL_Rect rect, int thickness, Uint32 outlineColor, Ui
 		SDL_FillSurfaceRect(screen, &border, outlineColor);
 }
 
+SDL_Color Window::UintToColor(Uint32 color) const {
+	SDL_Color tempcol;
+	tempcol.a = 255;
+	tempcol.r = (color >> 16) & 0xFF;
+	tempcol.g = (color >> 8) & 0xFF;
+	tempcol.b = color & 0xFF;
+	return tempcol;
+}
+
+void Window::drawString(SDL_Rect rect, std::string text, int fontSize, Fonts fontName, Uint32 color) {
+	SDL_Color colorSDL = UintToColor(color);
+	switch (fontName)
+	{
+	case Fonts::SANS:
+		font = TTF_OpenFont("./fonts/sans.ttf", fontSize);
+		break;
+	case Fonts::COMIC_SANS:
+		font = TTF_OpenFont("./fonts/comic_sans.ttf", fontSize);
+		break;
+	default:
+	case Fonts::ARIAL:
+		font = TTF_OpenFont("./fonts/arial.ttf", fontSize);
+		break;
+	}
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), colorSDL);
+	int w, h;
+	TTF_SizeText(font, text.c_str(), &w, &h);
+	SDL_Rect textRect;
+	textRect.x = rect.x + (rect.w - w) / 2;
+	textRect.y = rect.y + (rect.h - h) / 2;
+	SDL_BlitSurface(surface, NULL, screen, &textRect);
+	SDL_DestroySurface(surface);
+	TTF_CloseFont(font);
+}
+

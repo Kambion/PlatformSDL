@@ -4,6 +4,7 @@
 #include <string_view>
 #include <string>
 #include <map>
+#include "Fonts.h"
 
 class Window {
 private:
@@ -15,11 +16,13 @@ private:
 	SDL_Texture* scrtex = nullptr;
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+	TTF_Font* font = nullptr;
 
 	std::map<std::string, SDL_Surface*> images;
 
 	bool loadImage(std::string name);
 	SDL_Surface* SDL_CreateRGBSurface(Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask);
+	SDL_Color UintToColor(Uint32 color) const;
 public:
 	Window(std::string_view title, int width, int height, bool fullscreen = false);
 	~Window();
@@ -31,4 +34,7 @@ public:
 	void drawRectangle(SDL_Rect rect, int thickness, Uint32 outlineColor, Uint32 fillColor);
 	void drawCircle(int x, int y, int radius, int thickness, Uint32 fillColor);
 	void clearWindow();
+	void drawString(SDL_Rect rect, std::string text, int fontSize, Fonts fontName, Uint32 color);
+	inline int getWidth() { return width; }
+	inline int getHeight() { return height; }
 };
